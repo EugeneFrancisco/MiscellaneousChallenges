@@ -1,0 +1,37 @@
+#I first found this problem on the math stack exchange "https://math.stackexchange.com/questions/1393798/expected-value-from-popping-bubbles"
+#Matrices seemed like a common sense way to appraoch the problem, so I used pytorch.
+#Fun Challenge
+#Someone with an n*m bubble wrap randomly chooses bubbles to pop. They choose the bubble blindly, so they may land on an already popped bubble
+#How many attempted bubble pops does it take, on average, for this person to clear the entire wrap of bubbles.
+#======================================================================================================================
+import torch
+import numpy as np
+import random
+
+def createBubbleWrap(n,m):#creates "bubble wrap" as matrix of 1
+  bw = torch.ones(n,m)
+  return bw
+def findOnes(mat):# returns True if there are any 1s in the matrix
+  columns = mat.size()[1]
+  rows = mat.size()[0]
+  for x in range(columns):
+    column = mat[:,x]
+    for element in column:
+      if element == 1:
+        return True
+n = 5#rows
+m = 5#col
+print(bw)
+sum = 0
+for x in range(100):#repeating trial 100 times
+  bw = createBubbleWrap(n,m)
+  count = 0
+  while findOnes(bw) == True:#while program finds one in matrix, repeat
+    randRow = random.randint(0,m-1)#find random row
+    randCol = random.randint(0,n-1)#find random col
+    bw[randRow,randCol] = 0#sets the respective element = 0, the equivalent of popping a bubble
+    count += 1
+    sum += 1
+
+print(sum)
+print(sum/100)
